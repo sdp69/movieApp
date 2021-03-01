@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.movie_card {
+  margin: 10px;
+  display: inline-flex;
+  flex-direction: row;
+  border: 1px solid #c3c3c3;
+  padding: 5px;
+}
+.poster{
+   width: 200px;
+  height: 200px;
+  border: aliceblue;
+  border-radius: 5px;
+}
+.desc{
+  padding: 20px;
+  text-align: left;
+}
+.storyline{
+  font-size: 15px;
+}
+.tabs{
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
