@@ -1,6 +1,7 @@
 export const ADD_MOVIES = `ADD_MOVIES`; //Remember action types are variables
 export const ADD_FAVOURITE= `ADD_FAVOURITE`;
 export const REMOVE_FAVOURITE = `REMOVE_FAVOURITE`;
+export const SET_SHOW_FAVOURITES = `SET_SHOW_FAVOURITES`;
 
 export function addMovies(movies){ //action creators are functions, conventionally speaking.
   return {
@@ -20,5 +21,12 @@ export function removeFavourite(movie){
     return {
         type: REMOVE_FAVOURITE,
         movie: movie
+    }
+};
+
+export function setShowFavourites(val){
+    return {
+        type: SET_SHOW_FAVOURITES,
+        val
     }
 };

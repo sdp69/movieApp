@@ -4,7 +4,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from "./Navbar";
 import MovieCard from "./MovieCard";
-import {addMovies} from "./actions";
+import {addMovies, setShowFavourites} from "./actions";
 
 
 
@@ -29,15 +29,19 @@ class App extends React.Component{
         }
         return false;
     }
+    setFavourite(val){
+        this.props.store.dispatch(setShowFavourites(val));
+    }
     render() {
-        const {list} = this.props.store.getState();
+        const {list, favourites, showFavourites} = this.props.store.getState();
+        const display = showFavourites? favourites:list;
         return (
             <div className="App">
-                <Navigation/>
+                <Navigation tab={this.setFavourite.bind(this)}/>
                 <Container fluid="md">
                     <Row>
                         <Col fluid="md">{
-                            list.map((movie, index) => {
+                            display.map((movie, index) => {
                                 return (
                                     <MovieCard movie={movie} key={`movie_${index}`} dispatch={this
                                         .props.store.dispatch}
@@ -48,6 +52,7 @@ class App extends React.Component{
                         }</Col>
                     </Row>
                 </Container>
+                {display.length === 0? <div><bold>Nothing to display here! </bold></div> : null}
             </div>
         );
     }

@@ -4,6 +4,10 @@ import {Navbar, Button, Form, Nav, FormControl} from "react-bootstrap";
 
 
 class Navigation extends React.Component{
+    constructor() {
+        super();
+        this.setter = undefined;
+    }
     render() {
         return(
             <div>
@@ -19,8 +23,15 @@ class Navigation extends React.Component{
                             }}/></span>Trending</Nav.Link>
                             <Nav.Link href="#link"><span><img src="https://cdn3.iconfinder.com/data/icons/glypho-free/64/star-circle-512.png" alt="" height="25" width="25" style={{
                                 margin: 5
-                            }}/></span>Favourites</Nav.Link>
-                            <Nav.Link href="#link">Movies</Nav.Link>
+                            }}/></span><span onClick={() => {
+                                this.setter = true;
+                                this.props.tab(true)}} className={this
+                                .setter?"bold1":""}>Favourites</span></Nav.Link>
+                            <Nav.Link href="#link"><span onClick={() => {
+                                this.setter = false;
+                                this.props.tab(false);
+                            }} className={this
+                                .setter?"":"bold2"}>Movies</span></Nav.Link>
                             <Nav.Link href="#link">About</Nav.Link>
                         </Nav>
                         <Form inline>
