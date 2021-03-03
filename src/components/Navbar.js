@@ -27,12 +27,17 @@ class Navigation extends React.Component{
                                 this.setter = true;
                                 this.props.tab(true)}} className={this
                                 .setter?"bold1":""}>Favourites</span></Nav.Link>
-                            <Nav.Link href="#link"><span onClick={() => {
+                            <Nav.Link href="#link"><span><img src="https://img.icons8.com/carbon-copy/100/000000/starred-ticket.png" alt="movie_icon"
+                            height="25" width="25" style={{
+                                margin: 5
+                            }}/></span><span onClick={() => {
                                 this.setter = false;
                                 this.props.tab(false);
                             }} className={this
                                 .setter?"":"bold2"}>Movies</span></Nav.Link>
-                            <Nav.Link href="#link">About</Nav.Link>
+                            <Nav.Link href="#link"><span tyle={{
+                                margin: 5
+                            }}></span>About</Nav.Link>
                         </Nav>
                         <Form inline>
                             <FormControl inline type="text" placeholder="Search" className="mr-sm-2" />
@@ -45,3 +50,9 @@ class Navigation extends React.Component{
      }
 }
  export default Navigation;
+
+
+
+
+
+
