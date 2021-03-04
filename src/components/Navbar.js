@@ -1,14 +1,51 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Button, Form, Nav, FormControl} from "react-bootstrap";
+import {searchtheMovie, addMovies} from "./actions";
 
 
 class Navigation extends React.Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.setter = undefined;
+        this.state  = {
+            searchText: ``
+        };
+        this.style={
+            width: 289,
+            height: `auto`,
+            position: `absolute`,
+            background: `#fff`,
+            top: 50,
+            opacity: 1,
+            padding: 10,
+            display: `inline-flex`,
+            flexBasis: `row`,
+            zIndex: 1,
+            cursor: `pointer`,
+            border: `1px solid #eee`,
+            borderRadius: 2
+        };
+
     }
+    handlerChange = (e) => {
+        this.setState({
+            searchText: e.target.value
+        });
+    };
+    handleSearch = () => {
+        const {searchText} = this.state;
+        this.props.store.dispatch(searchtheMovie(searchText))
+    };
+    handleAddToMovies = (movie) => {
+        const {list} = this.props.store.getState().movies;
+        list.unshift(movie);
+        this.props.store.dispatch(addMovies(list));
+    };
     render() {
+        const {search} = this.props.store.getState();
+        const {showSearchResults} = search;
+        console.log(showSearchResults);
         return(
             <div>
                 <Navbar bg="primary" expand="lg" variant="dark">
@@ -40,8 +77,23 @@ class Navigation extends React.Component{
                             }}></span>About</Nav.Link>
                         </Nav>
                         <Form inline>
-                            <FormControl inline type="text" placeholder="Search" className="mr-sm-2" />
-                            <Button variant="outline-light">Search</Button>
+                            <FormControl inline type="text" placeholder="Search" className="mr-sm-2" onChange={this.handlerChange} />
+                            <Button variant="outline-light" onClick={this.handleSearch}>Search</Button>
+                            {showSearchResults&&<div style={this.style}><div>
+                                <img src={search
+                                    .result.Poster } alt="" className="search_img"/>
+                            </div>
+                            <div>
+                                <div className="search_box_extension_movieName">
+                                    {search.result.Title+`(${search.result.Released})` }
+                                </div>
+                                <div className="genre">{search.result.Genre}</div>
+                                <div className="genre">{search.result.Runtime}</div>
+                                <div style={{marginLeft: 10, marginTop: 5 }}>
+                                    <Button variant="outline-primary" className="w-75"
+                                    onClick={() => {this.handleAddToMovies(search.result)}}>Favourite</Button>
+                                </div>
+                            </div></div>}
                         </Form>
                     </Navbar.Collapse>
                 </Navbar>

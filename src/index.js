@@ -20,10 +20,18 @@ import combineReducers from "./components/reducers";
 };*/
 const logger = ({dispatch, getState}) => (next) => (action) => {
     //middleware code
-    console.log(`ACTION_TYPE=`, action.type);
+    if (typeof action !== `function`)
+        console.log(`ACTION_TYPE=`, action.type);
     next(action);
 };
-const store = createStore(combineReducers, applyMiddleware(logger));
+const thunk = ({dispatch, getState}) => (next) => (action) => {
+    if(typeof action === `function`){
+        action(dispatch);
+        return;
+    }
+    next(action);
+};
+const store = createStore(combineReducers, applyMiddleware(logger,thunk));
 
 console.log(`After State`, store.getState());
 ReactDOM.render(

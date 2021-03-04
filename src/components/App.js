@@ -25,21 +25,19 @@ class App extends React.Component{
         const {movies} = this.props.store.getState();
         const {favourites} = movies;
         const index = favourites.indexOf(movie);
-        if(index !== -1){
-            return true;
-        }
-        return false;
+        return index !== -1;
     }
     setFavourite(val){
         this.props.store.dispatch(setShowFavourites(val));
     }
     render() {
-        const {movies} = this.props.store.getState();
+        const {movies, search} = this.props.store.getState();
+        console.log(search);
         const {list, favourites, showFavourites} = movies;
         const display = showFavourites? favourites:list;
         return (
             <div className="App">
-                <Navigation tab={this.setFavourite.bind(this)}/>
+                <Navigation tab={this.setFavourite.bind(this)} store={this.props.store}/>
                 <Container fluid="md">
                     <Row>
                         <Col fluid="md">{
@@ -54,7 +52,7 @@ class App extends React.Component{
                         }</Col>
                     </Row>
                 </Container>
-                {display.length === 0? <div><center><b>Nothing to display here! </b></center></div> : null}
+                {display.length === 0? <div style={{textAlign: `center`}}><b>Nothing to display here!</b></div> : null}
             </div>
         );
     }
