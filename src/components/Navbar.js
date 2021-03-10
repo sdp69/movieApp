@@ -2,6 +2,9 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Button, Form, Nav, FormControl} from "react-bootstrap";
 import {searchtheMovie, addMovies} from "./actions";
+//import {connect} from "../index";
+import {connect} from "react-redux";
+
 
 
 class Navigation extends React.Component{
@@ -35,15 +38,15 @@ class Navigation extends React.Component{
     };
     handleSearch = () => {
         const {searchText} = this.state;
-        this.props.store.dispatch(searchtheMovie(searchText))
+        this.props.dispatch(searchtheMovie(searchText))
     };
     handleAddToMovies = (movie) => {
-        const {list} = this.props.store.getState().movies;
+        const {list} = this.props.movies;
         list.unshift(movie);
-        this.props.store.dispatch(addMovies(list));
+        this.props.dispatch(addMovies(list));
     };
     render() {
-        const {search} = this.props.store.getState();
+        const {search} = this.props;
         const {showSearchResults} = search;
         console.log(showSearchResults);
         return(
@@ -101,7 +104,24 @@ class Navigation extends React.Component{
         );
      }
 }
- export default Navigation;
+
+/*class NavigationWrapper extends React.Component{
+    render() {
+        return (
+            <StoreContext.Consumer>
+                {(store) => <Navigation tab={this.props.tab} store={store}/>}
+            </StoreContext.Consumer>
+        )
+    }
+}*/
+    function mapStateToprops(state){
+        return{
+            search: state.search
+        }
+    }
+    const NavigationWrapper = connect(mapStateToprops)(Navigation);
+
+ export default NavigationWrapper;
 
 
 
